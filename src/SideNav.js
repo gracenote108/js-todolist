@@ -1,4 +1,5 @@
 import ProjectList from "./ProjectList";
+import snm from './SideNavManager'
 
 export default class SideNav {
   #parent;
@@ -10,6 +11,7 @@ export default class SideNav {
     this.#parent = document.getElementById(parent);
     this.createSideNav();
     this.#projectList = new ProjectList(this);
+    snm.addSideNav(this)
     this.populateProjectList();
   }
 

@@ -1,4 +1,5 @@
 import ProjectViewManager from "./ProjectViewManager.js";
+import snm from "./SideNavManager";
 
 export default class TodoBody {
   #root;
@@ -15,8 +16,22 @@ export default class TodoBody {
 
     const todoBodyControls = document.createElement("div");
     todoBodyControls.id = "todobody-controls";
-    todoBodyControls.classList = "flex-row jc-flex-end ai-center";
+    todoBodyControls.classList = "flex-row jc-space-between ai-center";
     todoBodyDiv.append(todoBodyControls);
+
+    const delProjButton = document.createElement('div')
+    delProjButton.id = 'del-proj-btn';
+    delProjButton.classList = 'background-color button';
+    delProjButton.textContent = 'Delete Project';
+    delProjButton.addEventListener('click', () => {
+      snm.projList.delProject(ProjectViewManager.currentProject.getProject())
+    })
+    todoBodyControls.append(delProjButton)
+
+    const addItmSaveCont = document.createElement('div')
+    addItmSaveCont.id = 'todo-addsave-cont';
+    addItmSaveCont.classList = 'flex-row';
+    todoBodyControls.append((addItmSaveCont))
 
     const addItemButton = document.createElement("div");
     addItemButton.id = "todo-add-item";
@@ -26,7 +41,7 @@ export default class TodoBody {
       "click",
       ProjectViewManager.addTodoItem.bind(ProjectViewManager)
     );
-    todoBodyControls.append(addItemButton);
+    addItmSaveCont.append(addItemButton);
 
     const saveButton = document.createElement("div");
     saveButton.id = "todo-save";
@@ -36,7 +51,7 @@ export default class TodoBody {
       "click",
       ProjectViewManager.saveItem.bind(ProjectViewManager)
     );
-    todoBodyControls.append(saveButton);
+    addItmSaveCont.append(saveButton);
 
     main.append(todoBodyDiv);
     this.#root = todoBodyDiv;

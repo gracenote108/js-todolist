@@ -1,10 +1,15 @@
 import Project from "./Project.js";
+import snm from './SideNavManager';
+import pvm from './ProjectViewManager';
+
 export default class ProjectList {
   #parent;
   #listOfProjects = [];
+  #projCount = 0;
 
   constructor(parent) {
     this.#parent = parent;
+    snm.addProjList(this)
 
     const projectList = this;
     const sideNav = this.#parent;
@@ -21,7 +26,19 @@ export default class ProjectList {
     });
   }
   addProject(project) {
-    this.#listOfProjects.push(project);
+    if (this.#projCount < 10)
+      this.#listOfProjects.push(project);
+      this.#projCount++;
+  }
+
+  delProject(project){
+    let idx = this.#listOfProjects.indexOf(project);
+    if (idx > -1) {
+      this.#listOfProjects.splice(idx, 1)
+      this.#projCount--;
+      snm.sideNav.populateProjectList();
+      pvm.clearBody()
+    }
   }
 
   getList() {

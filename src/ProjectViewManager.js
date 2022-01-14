@@ -40,6 +40,10 @@ class ProjectViewManager {
     return this.#todoBody;
   }
 
+  get currentProject() {
+    return this.#currentProject;
+  }
+
   clearBody() {
     while (this.#todoBody.firstChild)
       this.#todoBody.removeChild(this.#todoBody.firstChild);
